@@ -10,8 +10,6 @@ class SettingsController {
     try {
       const setting = await settingsService.create({ chat, username });
 
-      console.log(setting);
-
       return response.json(setting);
     } catch (e) {
       return response.status(400).json({
