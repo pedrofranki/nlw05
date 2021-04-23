@@ -20,8 +20,10 @@
   },
   "homepage": "https://github.com/pedrofranki/nlw05#readme",
   "dependencies": {
+    "ejs": "^3.1.6",
     "express": "^4.17.1",
     "reflect-metadata": "^0.1.13",
+    "socket.io": "^4.0.1",
     "sqlite3": "^5.0.2",
     "typeorm": "^0.2.32",
     "uuid": "^8.3.2"
