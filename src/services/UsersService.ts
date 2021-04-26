@@ -1,25 +1,33 @@
-import { getCustomRepository } from "typeorm";
+import { getCustomRepository, Repository } from "typeorm";
 import { UsersRepository } from "../repositories/UsersRepository";
+import { User } from "../entities/User";
 
 interface IUsersCreate {
   email: string;
 }
 
 class UsersService {
-  async create({ email }: IUsersCreate) {
-    const usersRepository = getCustomRepository(UsersRepository);
+  usersRepository: Repository<User>;
 
-    const isAlreadyUser = await usersRepository.findOne({ email });
-    console.log(isAlreadyUser)
+  constructor() {
+    this.usersRepository = getCustomRepository(UsersRepository);
+  }
+  async create({ email }: IUsersCreate) {
+    const isAlreadyUser = await this.usersRepository.findOne({ email });
+
     if (isAlreadyUser) {
       throw new Error("User already exists");
     }
 
-    const user = await usersRepository.create({ email });
+    const user = await this.usersRepository.create({ email });
 
-    usersRepository.save(user);
-    console.log(user);
+    await this.usersRepository.save(user);
+    
     return user;
+  }
+
+  async findByEmail(email: string) {
+    return await this.usersRepository.findOne({ email });
   }
 }
 
